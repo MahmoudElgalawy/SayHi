@@ -7,23 +7,23 @@
 
 import Foundation
 
-protocol LoginRegisterViewModelProtocol {
+protocol LoginRegisterProtocol {
     func register(email: String, password: String, completion: @escaping (_ error:Error?)-> Void)
     func login(email: String, password: String, completion: @escaping (_ error:Error?,_ isEmailVerfied: Bool)-> Void)
     func resendVerficationEmail(email: String, completion: @escaping (_ error:Error?)-> Void)
     func resetPasswordFor(email: String, completion: @escaping (_ error:Error?)-> Void)
 }
 
-class LoginRegisterViewModel: LoginRegisterViewModelProtocol {
-    let userListener: FUserListener!
+class LoginRegisterViewModel: LoginRegisterProtocol {
+    let userListener: UserListenerProtocol!
     
-    init(userListener: FUserListener) {
+    init(userListener: UserListenerProtocol) {
         self.userListener = userListener
     }
     
     func register(email: String, password: String, completion: @escaping (_ error:Error?)-> Void){
         userListener.registerUserWith(email: email, password: password) {  error in
-                completion(error)
+            completion(error)
         }
     }
     

@@ -7,11 +7,13 @@
 
 import UIKit
 import Firebase
+import Cloudinary
+
 
 @main
 class AppDelegate: UIResponder, UIApplicationDelegate {
 
-
+    var cloudinary: CLDCloudinary!
 
     func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey: Any]?) -> Bool {
         FirebaseApp.configure()

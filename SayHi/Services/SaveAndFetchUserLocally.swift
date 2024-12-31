@@ -6,13 +6,18 @@
 //
 
 import Foundation
+import FirebaseAuth
 
-protocol SaveUser {
+protocol SaveUserProtocol {
     func saveUserLocally(_ user: User)
 }
 
 
-class SaveUserLocally: SaveUser {
+class SaveAndFetchUserLocally: SaveUserProtocol {
+    
+    static let shared = SaveAndFetchUserLocally()
+    private init(){}
+    
     func saveUserLocally(_ user: User){
         let encoder = JSONEncoder()
         

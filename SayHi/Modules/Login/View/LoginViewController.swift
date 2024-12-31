@@ -29,13 +29,16 @@ class LoginViewController: UIViewController {
     @IBOutlet weak var loginBtnOutlet: UIButton!
     
     var isLogin = false
-    var viewModel: LoginRegisterViewModelProtocol!
+    var viewModel: LoginRegisterProtocol!
     
     override func viewDidLoad() {
         super.viewDidLoad()
         self.hideKeyboardWhenTappedAround()
         viewModel = LoginRegisterViewModel(userListener: UserListener.shared)
+        self.navigationController?.navigationBar.prefersLargeTitles = false
+        registerLoginBtn.tintColor = UIColor(named: "Color1")
         resendemailBtnOutlet.isEnabled = false
+        self.navigationController?.isNavigationBarHidden = true
     }
     
     
@@ -150,19 +153,19 @@ extension LoginViewController:UITextFieldDelegate{
 // Mark:- Confirm Registeration and Login
 
 extension LoginViewController{
-   private func registerUSer(){
-            if txtPassword.text == txtConfirmPassword.text {
-                viewModel.register(email: txtEmail.text!, password: txtPassword.text!) { error in
-                    if error == nil {
-                        SVProgressHUD.showSuccess(withStatus: "Verfication email sent, please verify your email and confirm the registeration")
-                        self.startCountdownForResendButton()
-                    }else{
-                        SVProgressHUD.showError(withStatus: "Can not register !!                    \(error!.localizedDescription)")
-                    }
+    private func registerUSer(){
+        if txtPassword.text == txtConfirmPassword.text {
+            viewModel.register(email: txtEmail.text!, password: txtPassword.text!) { error in
+                if error == nil {
+                    SVProgressHUD.showSuccess(withStatus: "Verfication email sent, please verify your email and confirm the registeration")
+                    self.startCountdownForResendButton()
+                }else{
+                    SVProgressHUD.showError(withStatus: "Can not register !!                    \(error!.localizedDescription)")
                 }
-            }else{
-                SVProgressHUD.showError(withStatus: "password and confirm Password should be identical !")
             }
+        }else{
+            SVProgressHUD.showError(withStatus: "password and confirm Password should be identical !")
+        }
     }
     
     private func loginUser(){
@@ -202,7 +205,7 @@ extension LoginViewController{
     }
     
     private func startCountdownForResendButton() {
-
+        
         resendemailBtnOutlet.isEnabled = false
         var remainingSeconds = 60
         
