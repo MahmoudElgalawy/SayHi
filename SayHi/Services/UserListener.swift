@@ -16,6 +16,7 @@ protocol UserListenerProtocol {
     func resetPasswordFor(email: String, completion: @escaping (_ error:Error?)-> Void)
     func logOutCurrentUser(completion: @escaping (_ error:Error?)-> Void)
     func saveUserToFirestore(_ user: User)
+    func downloadAllUsersFromFirestore(completion: @escaping (_ allUsers: [User]) -> Void)
     var currentUser: User?{get}
 }
 
@@ -145,5 +146,39 @@ class UserListener: UserListenerProtocol{
             }
         }
     }
+    
+    func downloadAllUsersFromFirestore(completion: @escaping (_ allUsers: [User]) -> Void) {
+        var users: [User] = []
+        
+        // الوصول إلى مرجع Firestore لمجموعة المستخدمين
+        fireStoreReference(.User).getDocuments { (snapshot, error) in
+            // التحقق من وجود المستندات
+            guard let documents = snapshot?.documents else {
+                print("No documents found")
+                completion([])
+                return
+            }
+            
+            // تحويل المستندات إلى كائنات User
+            let allUsers = documents.compactMap { (snapshot) -> User? in
+                return try? snapshot.data(as: User.self)
+            }
+            
+            // استثناء المستخدم الحالي وإضافة المستخدمين إلى المصفوفة
+            for user in allUsers {
+                if self.currentUser?.id == user.id {
+                    var user = user
+                    user.username = "You"
+                    users.append(user)
+                }else{
+                    users.append(user)
+                }
+            }
+            
+            // إرجاع النتيجة عبر الـ completion
+            completion(users)
+        }
+    }
+
 }
 

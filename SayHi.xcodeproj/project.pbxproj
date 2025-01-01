@@ -30,6 +30,10 @@
 		1E3033332D1AEA79003C3534 /* SettingTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1E3033322D1AEA79003C3534 /* SettingTableViewController.swift */; };
 		1E3033372D1C0199003C3534 /* SettingViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1E3033362D1C0199003C3534 /* SettingViewModel.swift */; };
 		1E60AEF82D2195C9003924B7 /* WriteStatusViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1E60AEF72D2195C9003924B7 /* WriteStatusViewController.swift */; };
+		1E60AF092D253505003924B7 /* UsersTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1E60AF082D253504003924B7 /* UsersTableViewController.swift */; };
+		1E60AF0C2D253533003924B7 /* UsersTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1E60AF0B2D253533003924B7 /* UsersTableViewCell.swift */; };
+		1E60AF0E2D253546003924B7 /* UsersViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1E60AF0D2D253546003924B7 /* UsersViewModel.swift */; };
+		1E60AF102D255AA3003924B7 /* DummyUsers.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1E60AF0F2D255AA3003924B7 /* DummyUsers.swift */; };
 		1EAAA2092D1DBA38007B1D53 /* EditProfileTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1EAAA2082D1DBA38007B1D53 /* EditProfileTableViewController.swift */; };
 		1EAAA20D2D1DD361007B1D53 /* EditProfileViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1EAAA20C2D1DD361007B1D53 /* EditProfileViewModel.swift */; };
 		1ED110A42D17D1D700DE7562 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1ED110A32D17D1D700DE7562 /* AppDelegate.swift */; };
@@ -61,6 +65,10 @@
 		1E3033322D1AEA79003C3534 /* SettingTableViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingTableViewController.swift; sourceTree = "<group>"; };
 		1E3033362D1C0199003C3534 /* SettingViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingViewModel.swift; sourceTree = "<group>"; };
 		1E60AEF72D2195C9003924B7 /* WriteStatusViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WriteStatusViewController.swift; sourceTree = "<group>"; };
+		1E60AF082D253504003924B7 /* UsersTableViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UsersTableViewController.swift; sourceTree = "<group>"; };
+		1E60AF0B2D253533003924B7 /* UsersTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UsersTableViewCell.swift; sourceTree = "<group>"; };
+		1E60AF0D2D253546003924B7 /* UsersViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UsersViewModel.swift; sourceTree = "<group>"; };
+		1E60AF0F2D255AA3003924B7 /* DummyUsers.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DummyUsers.swift; sourceTree = "<group>"; };
 		1EAAA2082D1DBA38007B1D53 /* EditProfileTableViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EditProfileTableViewController.swift; sourceTree = "<group>"; };
 		1EAAA20C2D1DD361007B1D53 /* EditProfileViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EditProfileViewModel.swift; sourceTree = "<group>"; };
 		1ED110A02D17D1D700DE7562 /* SayHi.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = SayHi.app; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -123,9 +131,8 @@
 		1E30332B2D1968A3003C3534 /* Modules */ = {
 			isa = PBXGroup;
 			children = (
-				1EFD14E12D209AFF00E3879C /* Status */,
-				1EAAA2052D1DB9B2007B1D53 /* EditProfile */,
-				1E3033312D1AEA2D003C3534 /* Setting */,
+				1E60AF052D253478003924B7 /* Users */,
+				1E60AF042D253439003924B7 /* SettingModule */,
 				1E30332C2D1968B0003C3534 /* Login */,
 			);
 			path = Modules;
@@ -177,6 +184,42 @@
 			isa = PBXGroup;
 			children = (
 				1E3033322D1AEA79003C3534 /* SettingTableViewController.swift */,
+			);
+			path = View;
+			sourceTree = "<group>";
+		};
+		1E60AF042D253439003924B7 /* SettingModule */ = {
+			isa = PBXGroup;
+			children = (
+				1E3033312D1AEA2D003C3534 /* Setting */,
+				1EAAA2052D1DB9B2007B1D53 /* EditProfile */,
+				1EFD14E12D209AFF00E3879C /* Status */,
+			);
+			path = SettingModule;
+			sourceTree = "<group>";
+		};
+		1E60AF052D253478003924B7 /* Users */ = {
+			isa = PBXGroup;
+			children = (
+				1E60AF072D2534E2003924B7 /* View */,
+				1E60AF062D2534CA003924B7 /* ViewModel */,
+			);
+			path = Users;
+			sourceTree = "<group>";
+		};
+		1E60AF062D2534CA003924B7 /* ViewModel */ = {
+			isa = PBXGroup;
+			children = (
+				1E60AF0D2D253546003924B7 /* UsersViewModel.swift */,
+			);
+			path = ViewModel;
+			sourceTree = "<group>";
+		};
+		1E60AF072D2534E2003924B7 /* View */ = {
+			isa = PBXGroup;
+			children = (
+				1E60AF082D253504003924B7 /* UsersTableViewController.swift */,
+				1E60AF0B2D253533003924B7 /* UsersTableViewCell.swift */,
 			);
 			path = View;
 			sourceTree = "<group>";
@@ -263,6 +306,7 @@
 			isa = PBXGroup;
 			children = (
 				1ED110DD2D17E42900DE7562 /* UserModel.swift */,
+				1E60AF0F2D255AA3003924B7 /* DummyUsers.swift */,
 			);
 			path = Models;
 			sourceTree = "<group>";
@@ -411,9 +455,12 @@
 			buildActionMask = 2147483647;
 			files = (
 				1ED110D82D17E3FF00DE7562 /* ViewControllerExtension.swift in Sources */,
+				1E60AF0E2D253546003924B7 /* UsersViewModel.swift in Sources */,
 				1EAAA20D2D1DD361007B1D53 /* EditProfileViewModel.swift in Sources */,
 				1ED110A82D17D1D700DE7562 /* LoginViewController.swift in Sources */,
 				1ED110DB2D17E41400DE7562 /* FCollectionReference.swift in Sources */,
+				1E60AF0C2D253533003924B7 /* UsersTableViewCell.swift in Sources */,
+				1E60AF092D253505003924B7 /* UsersTableViewController.swift in Sources */,
 				1ED110E12D17E44500DE7562 /* UserListener.swift in Sources */,
 				1E3033332D1AEA79003C3534 /* SettingTableViewController.swift in Sources */,
 				1EAAA2092D1DBA38007B1D53 /* EditProfileTableViewController.swift in Sources */,
@@ -424,6 +471,7 @@
 				1E60AEF82D2195C9003924B7 /* WriteStatusViewController.swift in Sources */,
 				1E0943CE2D1FFCAE007C3A0E /* CloudinaryServices.swift in Sources */,
 				1E3033372D1C0199003C3534 /* SettingViewModel.swift in Sources */,
+				1E60AF102D255AA3003924B7 /* DummyUsers.swift in Sources */,
 				1ED110A62D17D1D700DE7562 /* SceneDelegate.swift in Sources */,
 				1E3033302D1968E5003C3534 /* LoginRegisterProtocol.swift in Sources */,
 				1EFD14E02D2066F900E3879C /* UIImageExtension.swift in Sources */,

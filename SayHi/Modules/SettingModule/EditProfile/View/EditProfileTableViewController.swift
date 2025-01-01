@@ -21,7 +21,7 @@ class EditProfileTableViewController: UITableViewController, UITextFieldDelegate
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        viewModel = EditProfileViewModel(saveFetchUser: SaveAndFetchUserLocally.shared, userListener: UserListener.shared, cloudinary: CloudinaryService())
+        viewModel = EditProfileViewModel(saveFetchUser: SaveAndFetchUserLocally.shared, userListener: UserListener.shared, cloudinary: CloudinaryService.shared)
         
         NotificationCenter.default.addObserver(self, selector: #selector(updateStatus(_:)), name: NSNotification.Name("StatusChanged"), object: nil)
         NotificationCenter.default.addObserver(self, selector: #selector(updateStatus(_:)), name: NSNotification.Name("StatusWrited"), object: nil)

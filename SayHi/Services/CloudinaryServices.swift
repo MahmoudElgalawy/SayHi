@@ -16,15 +16,16 @@ protocol CloudinaryServiceProtocol {
 class CloudinaryService: CloudinaryServiceProtocol{
     
     private let cloudinary: CLDCloudinary
+    static let shared = CloudinaryService()
+    
+    private init(){
+        self.cloudinary = CLDCloudinary(configuration: cloudinaryConfig)
+    }
     
     let cloudinaryConfig = CLDConfiguration(
         cloudName: "dg6uctmhd",
         apiKey: "391162217156563",secure: true
     )
-    
-    init() {
-        self.cloudinary = CLDCloudinary(configuration: cloudinaryConfig)
-    }
     
     func uploadImageToCloudinary(image: Data, completion: @escaping (String?) -> Void) {
         //        guard let imageData = image.jpegData(compressionQuality: 0.8) else {
