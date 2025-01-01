@@ -174,7 +174,7 @@ class UserListener: UserListenerProtocol{
                     users.append(user)
                 }
             }
-            
+            print(users)
             // إرجاع النتيجة عبر الـ completion
             completion(users)
         }

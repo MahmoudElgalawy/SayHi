@@ -27,6 +27,8 @@ class SettingTableViewController: UITableViewController {
         if #available(iOS 15.0, *) {
             tableView.sectionHeaderTopPadding = 0
         }
+//        let cloudinaryService = CloudinaryService.shared
+//        cloudinaryService.deleteAllResources()
     }
     
     override func viewWillAppear(_ animated: Bool) {
@@ -38,6 +40,10 @@ class SettingTableViewController: UITableViewController {
             .foregroundColor: UIColor(named: "Color1")!,
             .font: UIFont.systemFont(ofSize: 32, weight: .bold)
         ]
+        appearance.titleTextAttributes = [
+               .foregroundColor: UIColor(named: "Color1")!,
+               .font: UIFont.systemFont(ofSize: 18, weight: .semibold)
+           ]
         navigationController?.navigationBar.standardAppearance = appearance
         navigationController?.navigationBar.scrollEdgeAppearance = appearance
         navigationController?.navigationBar.compactAppearance = appearance
