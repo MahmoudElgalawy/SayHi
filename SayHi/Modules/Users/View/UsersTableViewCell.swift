@@ -26,17 +26,13 @@ class UsersTableViewCell: UITableViewCell {
         if user.avatarLink != "" {
             let secureURL = user.avatarLink.replacingOccurrences(of: "http://", with: "https://")
             guard let imageURL = URL(string: secureURL) else { return }
-            DispatchQueue.main.async {
-                self.imgAvatar.kf.setImage(with:imageURL) { result in
+                self.imgAvatar.kf.setImage(with:imageURL, options: [.transition(.fade(0.2))]){ result in
                     switch result {
                     case .success(let value):
-                        if let image = value.image.circleMasked {
-                            self.imgAvatar.image = image
-                        }
+                        self.imgAvatar.image = value.image.circleMasked
                     case .failure(let error):
                         print("Error loading image: \(error.localizedDescription)")
                     }
-                }
             }
         }
     }
@@ -48,3 +44,4 @@ class UsersTableViewCell: UITableViewCell {
     }
 
 }
+

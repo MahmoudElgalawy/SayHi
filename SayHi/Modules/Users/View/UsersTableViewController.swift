@@ -8,24 +8,112 @@
 import UIKit
 
 class UsersTableViewController: UITableViewController {
-
-//    var dummyUsers:DummyUsers!
     
+    //var dummyUsers:DummyUsers!
+    var viewModel: UsersProtocol!
+    let searchController = UISearchController()
+    var indicator : UIActivityIndicatorView?
+
     override func viewDidLoad() {
         super.viewDidLoad()
-//        dummyUsers = DummyUsers(cloudinaryService: CloudinaryService.shared, UserListener: UserListener.shared)
-//        dummyUsers.createDummyUsers()
-       
+        //        dummyUsers = DummyUsers(cloudinaryService: CloudinaryService.shared, UserListener: UserListener.shared)
+        //        dummyUsers.createDummyUsers()
+        viewModel = UsersViewModel(userListener: UserListener.shared)
+        searchBar()
+        setIndicator()
+        viewModel.getAllUsers ()
+        viewModel.bindUsersToViewController = { [weak self] in
+            DispatchQueue.main.async {
+                self?.tableView.reloadData()
+                self?.indicator?.stopAnimating()
+            }
+        }
+        self.tableView.showsVerticalScrollIndicator = false
+        searchController.searchResultsUpdater = self
+        self.refreshControl = UIRefreshControl()
+        self.tableView.refreshControl = self.refreshControl
     }
+    
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewDidAppear(animated)
+        let appearance = UINavigationBarAppearance()
+        appearance.configureWithOpaqueBackground()
+        appearance.backgroundColor = UIColor(named: "ColorTableView")
+        appearance.largeTitleTextAttributes = [
+            .foregroundColor: UIColor(named: "Color1")!,
+            .font: UIFont.systemFont(ofSize: 32, weight: .bold)
+        ]
+        appearance.titleTextAttributes = [
+            .foregroundColor: UIColor(named: "Color1")!,
+            .font: UIFont.systemFont(ofSize: 18, weight: .semibold)
+        ]
+        navigationController?.navigationBar.standardAppearance = appearance
+        navigationController?.navigationBar.scrollEdgeAppearance = appearance
+        navigationController?.navigationBar.compactAppearance = appearance
+    }
+    
+    func setIndicator(){
+        indicator = UIActivityIndicatorView(style: .large)
+        indicator?.color = .color1
+        indicator?.center = self.view.center
+        indicator?.startAnimating()
+        self.view.addSubview(indicator!)
+    }
+}
 
-    // MARK: - Table view data source
+// Mark:- Data Source And Delegate
 
+extension UsersTableViewController{
     override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return 1
+        return viewModel.users?.count ?? 1
     }
-
+    
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: "UsersTableViewCell", for: indexPath) as! UsersTableViewCell
+        cell.configureCell(user: self.viewModel.users![indexPath.row])
         return cell
+    }
+    
+    override func scrollViewDidEndDecelerating(_ scrollView: UIScrollView) {
+       if self.refreshControl!.isRefreshing{
+           viewModel.getAllUsers()
+           viewModel.bindUsersToViewController = { [weak self] in
+               DispatchQueue.main.async {
+                   self?.tableView.reloadData()
+               }
+           }
+           self.refreshControl?.endRefreshing()
+        }
+    }
+}
+
+//   Mark:-   SearchBar
+
+extension UsersTableViewController:UISearchResultsUpdating {
+    
+    func searchBar(){
+        searchController.searchBar.tintColor = UIColor.color1
+        let searchBar = searchController.searchBar
+        searchBar.searchTextField.backgroundColor = UIColor.systemGray
+        searchBar.searchTextField.textColor = UIColor.white
+        
+        let placeholderAttributes: [NSAttributedString.Key: Any] = [
+            .foregroundColor: UIColor.color1
+        ]
+        let attributedPlaceholder = NSAttributedString(string: "Search", attributes: placeholderAttributes)
+        searchBar.searchTextField.attributedPlaceholder = attributedPlaceholder
+        if let searchIcon = UIImage(systemName: "magnifyingglass") {
+            let tintedImage = searchIcon.withTintColor(UIColor.color1, renderingMode: .alwaysOriginal)
+            searchBar.setImage(tintedImage, for: UISearchBar.Icon.search, state: .normal)
+        }
+        
+        navigationItem.searchController = searchController
+        navigationItem.hidesSearchBarWhenScrolling = true
+    }
+    
+    func updateSearchResults(for searchController: UISearchController) {
+        guard let text = searchController.searchBar.text else{return}
+        viewModel?.filterUsers(by: text)
+        
     }
 }
