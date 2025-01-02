@@ -33,20 +33,7 @@ class SettingTableViewController: UITableViewController {
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewDidAppear(animated)
-        let appearance = UINavigationBarAppearance()
-        appearance.configureWithOpaqueBackground()
-        appearance.backgroundColor = UIColor(named: "ColorTableView")
-        appearance.largeTitleTextAttributes = [
-            .foregroundColor: UIColor(named: "Color1")!,
-            .font: UIFont.systemFont(ofSize: 32, weight: .bold)
-        ]
-        appearance.titleTextAttributes = [
-               .foregroundColor: UIColor(named: "Color1")!,
-               .font: UIFont.systemFont(ofSize: 18, weight: .semibold)
-           ]
-        navigationController?.navigationBar.standardAppearance = appearance
-        navigationController?.navigationBar.scrollEdgeAppearance = appearance
-        navigationController?.navigationBar.compactAppearance = appearance
+        self.navigationController?.setNavigationBar()
         showUserInfo()
     }
     
@@ -130,7 +117,7 @@ extension SettingTableViewController{
     }
     
     override func tableView(_ tableView: UITableView, heightForHeaderInSection section: Int) -> CGFloat {
-        return section == 0 ? 10.0 : 20.0
+        return section == 0 ? 0.0 : 20.0
     }
     
     override func tableView(_ tableView: UITableView, heightForFooterInSection section: Int) -> CGFloat {
