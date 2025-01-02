@@ -15,7 +15,7 @@ struct DummyUsers{
         print("Creating dummy users...")
         
         // أسماء المستخدمين الوهميين
-        let names = ["Mohamed", "Ahmed", "Mahmoud", "Aya", "Yasser","Salma","Logy","Ali"]
+        let names = ["Mohamed Ahmed", "Ahmed Alaa", "Mahmoud Abdallah", "Aya Ali", "Yasser Amar","Salma Zyad","Logy Sleem","Fathy Ali"]
         
         var imageIndex = 1
         var userIndex = 1
@@ -27,15 +27,15 @@ struct DummyUsers{
             if let image = UIImage(named: "User\(imageIndex)") {
 
                 cloudinaryService.uploadImageToCloudinary(image: image.pngData()!) { avatarLink in
-                    let user = User(
+                    
+                    UserListener.saveUserToFirestore(User(
                         id: id,
                         username: names[i],
                         email: "user\(userIndex)@mail.com",
                         pushId: "",
                         avatarLink: avatarLink ?? "",
                         status: "No Status"
-                    )
-                    UserListener.saveUserToFirestore(user)
+                    ))
                     userIndex += 1
                 }
             } else {

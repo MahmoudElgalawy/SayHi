@@ -36,20 +36,7 @@ class UsersTableViewController: UITableViewController {
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewDidAppear(animated)
-        let appearance = UINavigationBarAppearance()
-        appearance.configureWithOpaqueBackground()
-        appearance.backgroundColor = UIColor(named: "ColorTableView")
-        appearance.largeTitleTextAttributes = [
-            .foregroundColor: UIColor(named: "Color1")!,
-            .font: UIFont.systemFont(ofSize: 32, weight: .bold)
-        ]
-        appearance.titleTextAttributes = [
-            .foregroundColor: UIColor(named: "Color1")!,
-            .font: UIFont.systemFont(ofSize: 18, weight: .semibold)
-        ]
-        navigationController?.navigationBar.standardAppearance = appearance
-        navigationController?.navigationBar.scrollEdgeAppearance = appearance
-        navigationController?.navigationBar.compactAppearance = appearance
+        navigationController?.setNavigationBar()
     }
     
     func setIndicator(){
@@ -64,6 +51,7 @@ class UsersTableViewController: UITableViewController {
 // Mark:- Data Source And Delegate
 
 extension UsersTableViewController{
+    
     override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         return viewModel.users?.count ?? 1
     }
@@ -74,12 +62,21 @@ extension UsersTableViewController{
         return cell
     }
     
+    override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        let userProfileVC = storyboard?.instantiateViewController(identifier: "UserProfileTableViewController") as! UserProfileTableViewController
+        userProfileVC.viewModel = UserProfileViewModel(user:viewModel.users![indexPath.row], userListener: UserListener.shared)
+    
+     
+        navigationController?.pushViewController(userProfileVC, animated: true)
+    }
+    
     override func scrollViewDidEndDecelerating(_ scrollView: UIScrollView) {
        if self.refreshControl!.isRefreshing{
            viewModel.getAllUsers()
            viewModel.bindUsersToViewController = { [weak self] in
                DispatchQueue.main.async {
                    self?.tableView.reloadData()
+                   self?.searchBar()
                }
            }
            self.refreshControl?.endRefreshing()
@@ -94,7 +91,7 @@ extension UsersTableViewController:UISearchResultsUpdating {
     func searchBar(){
         searchController.searchBar.tintColor = UIColor.color1
         let searchBar = searchController.searchBar
-        searchBar.searchTextField.backgroundColor = UIColor.systemGray
+        searchBar.searchTextField.backgroundColor = UIColor.systemGray5
         searchBar.searchTextField.textColor = UIColor.white
         
         let placeholderAttributes: [NSAttributedString.Key: Any] = [

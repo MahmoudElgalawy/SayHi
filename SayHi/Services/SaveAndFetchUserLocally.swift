@@ -20,7 +20,6 @@ class SaveAndFetchUserLocally: SaveUserProtocol {
     
     func saveUserLocally(_ user: User){
         let encoder = JSONEncoder()
-        
         do{
             let data = try encoder.encode(user)
             UserDefaults.standard.setValue(data, forKey: "CurrentUser")
